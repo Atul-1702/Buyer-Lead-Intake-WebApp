@@ -6,12 +6,13 @@ const buyerHistoryModel = z
     buyerId: z.string(),
     changedBy: z.string(),
     changedAt: z.date().optional(),
-    diff: buyersModel.partial(),
+    diff: z.object({ old: buyersModel.partial(), new: buyersModel.partial() }),
   })
   .refine(
     (data) =>
-      data.diff.budgetMin !== undefined && data.diff.budgetMax !== undefined
-        ? data.diff.budgetMin <= data.diff.budgetMax
+      data.diff.new.budgetMin !== undefined &&
+      data.diff.new.budgetMax !== undefined
+        ? data.diff.new.budgetMin <= data.diff.new.budgetMax
         : true,
     {
       message: "budgetMin must be less than or equal to budgetMax in diff",

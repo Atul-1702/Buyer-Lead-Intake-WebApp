@@ -1,0 +1,10 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon-search">
+<mask id="mask0_1704_7075" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<path id="search" fill-rule="evenodd" clip-rule="evenodd" d="M23.4003 21.3506L17.7053 15.6271C24.5487 4.32542 10.7635 -4.80124 2.79041 2.78322C-4.94827 11.4974 4.74031 24.3741 15.6054 17.7365L21.3004 23.3053C22.9457 25.1147 25.0502 23.0053 23.4003 21.3506ZM9.66663 2.9801C18.6615 2.9801 18.9521 16.5271 9.66663 16.5271C0.624892 16.5271 0.882691 2.9801 9.66663 2.9801Z" fill="#6B6C7E"/>
+</mask>
+<g mask="url(#mask0_1704_7075)">
+<rect id="Color Fill" width="23.9988" height="24.0002" fill="#6B6C7E"/>
+</g>
+</g>
+</svg>

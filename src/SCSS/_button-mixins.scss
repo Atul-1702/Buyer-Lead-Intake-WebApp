@@ -1,0 +1,70 @@
+@use "./font-mixins" as fontMixin;
+@use "./variables";
+
+@mixin redButtonMixin() {
+  color: variables.$primary-base-white;
+  background: variables.$primary-primary;
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1000px;
+  border: none;
+  gap: 6px;
+  height: 48px;
+  cursor: pointer;
+  @include fontMixin.fontStyleSemiBold();
+  span {
+    z-index: 2;
+  }
+  img {
+    z-index: 2;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 100%;
+    background-color: variables.$primary-primary-d-1;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    animation: hoverOut 0.5s forwards;
+    @keyframes hoverOut {
+      0% {
+        width: 100%;
+      }
+
+      100% {
+        width: 0%;
+      }
+    }
+  }
+  &:hover {
+    &::after {
+      animation: hoverIn 0.5s forwards;
+    }
+    span {
+      color: variables.$light-white;
+      z-index: 2;
+    }
+    img {
+      z-index: 2;
+    }
+
+    @keyframes hoverIn {
+      0% {
+        width: 0%;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@mixin underlineLink() {
+}

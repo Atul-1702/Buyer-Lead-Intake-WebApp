@@ -27,7 +27,7 @@ const buyersModel = z
     notes: z.string().max(1000).optional(),
     tags: z.array(z.string()).optional(),
     updatedAt: z.date().optional(),
-    ownerId: z.number().int().positive().optional(),
+    ownerId: z.string().optional(),
   })
   .refine(
     (data) => {
