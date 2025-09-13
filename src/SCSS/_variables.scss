@@ -1,0 +1,24 @@
+$dark-dark-d-2: var(--dark-dark-d-2, #111116);
+$primary-base-black: var(--Primary-Base-Black, #000);
+$secondary-secondary-l-2: var(--secondary-secondary-l-2, #cdced9);
+$light-white: var(--light-white, #fff);
+$primary-primary: var(--primary-primary, #fb5650);
+$primary-base-white: var(--Primary-Base-White, var(--Primary-Base-White, #fff));
+$primary-primary-d-1: var(--primary-primary-d-1, #d23d37);
+$dark-dark-l-2: var(--dark-dark-l-2, #393a4a);
+$helby-webflow-ecommerce-webflow-io-black: var(
+  --helby-webflow-ecommerce-webflow-io-black,
+  $primary-base-black
+);
+$secondary-700: var(--Secondary-700, #0d121f);
+$light-light-d-2: var(--light-light-d-2, #d3d6e0);
+$secondary-secondary: var(--secondary-secondary, #6b6c7e);
+$brand-color-sparkal-color: var(--Brand-color-Sparkal-color, #fb5650);
+$secondary-400: -var(--Secondary-400, #596780);
+/* Variable for Desktop, Tablet and Mobile Width BreakPoints */
+$tabletBreakpoint: 1250px;
+$mobileBreakpoint: 650px;
+
+$desktopFixedWidth: 1216px;
+$tabletFixedWidth: 616px;
+$mobileFixedWidth: 344px;

@@ -1,0 +1,25 @@
+@use "variables";
+
+@mixin desktopFixedWidth() {
+  width: variables.$desktopFixedWidth;
+  min-width: variables.$desktopFixedWidth;
+  max-width: variables.$desktopFixedWidth;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin tabletFixedWidth() {
+  width: variables.$tabletFixedWidth;
+  min-width: variables.$tabletFixedWidth;
+  max-width: variables.$tabletFixedWidth;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin mobileFixedWidth() {
+  width: variables.$mobileFixedWidth;
+  min-width: variables.$mobileFixedWidth;
+  max-width: variables.$mobileFixedWidth;
+  margin-left: auto;
+  margin-right: auto;
+}

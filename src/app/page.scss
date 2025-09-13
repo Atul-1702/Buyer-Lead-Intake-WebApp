@@ -1,0 +1,128 @@
+@use "../SCSS/font-mixins" as fontMixins;
+@use "../SCSS/variables";
+.home-page-main-content-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("../../public/images/mainHeader-darkBlueOverlay3.jpg");
+  margin-top: -100px;
+  background-position: center;
+  background-size: cover;
+
+  #top-heading {
+    text-align: center;
+    width: variables.$desktopFixedWidth;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 180px;
+    margin-bottom: 16px;
+    @include fontMixins.fontStyleBold(
+      $fontSize: 40px,
+      $fontColor: variables.$light-white
+    );
+    @media (max-width: variables.$tabletBreakpoint) {
+      width: variables.$tabletFixedWidth;
+    }
+    @media (max-width: variables.$mobileBreakpoint) {
+      font-size: 24px;
+      width: variables.$mobileFixedWidth;
+    }
+  }
+  #top-heading-description {
+    text-align: center;
+    width: variables.$desktopFixedWidth;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    @include fontMixins.fontStyleSemiBold(
+      $fontSize: 19px,
+      $fontColor: variables.$light-white
+    );
+    @media (max-width: variables.$tabletBreakpoint) {
+      width: variables.$tabletFixedWidth;
+    }
+    @media (max-width: variables.$mobileBreakpoint) {
+      font-size: 18px;
+      width: variables.$mobileFixedWidth;
+    }
+  }
+  .card-container-outer-wrapper {
+    margin-top: 75px;
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    width: variables.$desktopFixedWidth;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: variables.$tabletBreakpoint) {
+      flex-direction: column;
+      gap: 32px;
+      width: variables.$tabletFixedWidth;
+      align-items: center;
+    }
+    @media (max-width: variables.$mobileBreakpoint) {
+      width: variables.$mobileFixedWidth;
+    }
+  }
+  .card-container {
+    perspective: 1000px;
+    width: 320px;
+    height: 200px;
+    max-height: 200px;
+    min-height: 200px;
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+
+    &:hover {
+      transform: rotateY(180deg);
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .card-face {
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .card-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    max-height: 200px;
+    min-height: 200px;
+    width: 320px;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .card-back {
+    color: #fff;
+    transform: rotateY(180deg);
+    padding: 10px 20px;
+    text-align: center;
+    height: 180px;
+    width: 280px;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .learn-more-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+}

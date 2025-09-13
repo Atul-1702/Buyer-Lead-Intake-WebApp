@@ -1,0 +1,30 @@
+@mixin cardHoverInAnimation(
+  $translate: 100px,
+  $perspective2: 800px,
+  $perspective1: 1200px
+) {
+  @keyframes cardHoverIn {
+    0% {
+      transform: perspective($perspective1) translateZ(0px);
+    }
+    100% {
+      transform: perspective($perspective2) translateZ($translate);
+    }
+  }
+  animation: cardHoverIn 0.9s ease-in-out forwards;
+}
+@mixin cardHoverOutAnimation(
+  $translate: 100px,
+  $perspective2: 800px,
+  $perspective1: 1200px
+) {
+  @keyframes cardHoverOut {
+    0% {
+      transform: perspective($perspective2) translateZ($translate);
+    }
+    100% {
+      transform: perspective($perspective1) translateZ(0px);
+    }
+  }
+  animation: cardHoverOut 0.9s ease-in-out forwards;
+}
