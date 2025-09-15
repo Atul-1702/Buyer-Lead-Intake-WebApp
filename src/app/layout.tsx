@@ -3,6 +3,7 @@ import "./globals.scss";
 import CustomFont from "next/font/local";
 import Header from "@/components/header/header";
 import ReduxProvider from "@/redux/provider";
+import { Toaster } from "react-hot-toast";
 
 const SFProText = CustomFont({
   src: [
@@ -39,9 +40,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={SFProText.variable}>
       <body>
-        <Header></Header>
+        <Toaster></Toaster>
+
         <div style={{ marginTop: "130px" }}>
-          <ReduxProvider>{children}</ReduxProvider>
+          <ReduxProvider>
+            <Header></Header>
+            {children}
+          </ReduxProvider>
         </div>
       </body>
     </html>

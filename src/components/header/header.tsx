@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import "./Header.scss";
+import "./header.scss";
 import { useState } from "react";
+
 function Header() {
   const [toggleImage, setToggleImage] = useState<string>("/images/menu.svg");
 
@@ -17,50 +18,31 @@ function Header() {
     <header className="header-component">
       <nav className="header-nav">
         <Link href="/" className="header-logo">
-          <h1>Artistly</h1>
+          <h1>BuyersLead</h1>
         </Link>
 
         <ul className="header-nav-links">
           <li>
-            <Link href={{ pathname: "/artists" }}>All Artists</Link>
+            <Link href={{ pathname: "/artists" }}>All Buyers</Link>
           </li>
           <li>
             <Link
               href={{ pathname: "/artists", query: { category: "Singer" } }}
             >
-              Singer
+              Add Buyer
             </Link>
           </li>
           <li>
             <Link
               href={{ pathname: "/artists", query: { category: "Dancer" } }}
             >
-              Dancer
-            </Link>
-          </li>
-          <li>
-            <Link href={{ pathname: "/artists", query: { category: "DJ" } }}>
-              DJ
-            </Link>
-          </li>
-          <li>
-            <Link
-              href={{ pathname: "/artists", query: { category: "Comedian" } }}
-            >
-              Comedian
-            </Link>
-          </li>
-          <li>
-            <Link
-              href={{ pathname: "/artists", query: { category: "Magician" } }}
-            >
-              Magician
+              CV Import
             </Link>
           </li>
         </ul>
 
         <div className="header-nav-buttons">
-          <Link href="/artist-book" className="book-now-link">
+          <Link href="/owner/auth" className="book-now-link">
             <button type="button">
               <Image
                 src="/images/right-arrow-icon-white.svg"
@@ -68,7 +50,10 @@ function Header() {
                 width={24}
                 height={24}
               />
-              <span>Book Now</span>
+
+              {/* <span>Logout</span> */}
+
+              <span>Login / Signup</span>
             </button>
           </Link>
           <button
@@ -83,9 +68,7 @@ function Header() {
       {toggleImage === "/images/cancel-icon.svg" ? (
         <nav className="header-mobile-nav">
           <div className="header-mobile-top-bar">
-            <Link className="title" href={"/"}>
-              <h1>Artistly</h1>
-            </Link>
+            <Link className="title" href={"/"}></Link>
             <div className="mobile-button-containers">
               <Link href="/artist-book" className="mobile-book-now-link">
                 <button type="button">
@@ -95,7 +78,10 @@ function Header() {
                     width={24}
                     height={24}
                   />
-                  <span>Book Now</span>
+
+                  {/* <span>Logout</span> */}
+
+                  <span>Login / Signup</span>
                 </button>
               </Link>
               <button

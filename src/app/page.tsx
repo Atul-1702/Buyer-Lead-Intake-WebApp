@@ -1,6 +1,5 @@
 import Image from "next/image";
 import "./page.scss";
-import Signup from "@/components/signup/signup";
 
 export default async function Home() {
   return (
@@ -71,11 +70,11 @@ export default async function Home() {
               </div>
             </div>
             <div className="card-face card-back">
-              <h3>LEADS DIRECT</h3>
+              <h3>HOUSE VALUES</h3>
               <p>
-                We target consumers who are searching for home listings on
-                Google and other search engines and drive them directly to your
-                website.
+                Potential seller leads visit HouseValues.com to request a free
+                personalized home valuation, and we pass their information on to
+                you!
               </p>
               <Image
                 src="/images/lmBrightOrange.webp"
@@ -108,11 +107,10 @@ export default async function Home() {
               </div>
             </div>
             <div className="card-face card-back">
-              <h3>LEADS DIRECT</h3>
+              <h3>NETWORK BOOST</h3>
               <p>
-                We target consumers who are searching for home listings on
-                Google and other search engines and drive them directly to your
-                website.
+                We quickly capture leads for you through Facebook and Instagram.
+                AND we even nurture them automatically on your behalf.
               </p>
               <Image
                 src="/images/lmBrightGreen.png"

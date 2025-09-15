@@ -84,3 +84,27 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+
+export async function PUT(req:NextRequest){
+   
+     try{
+        const {id,buyersData} = await req.json();
+
+        await prisma.buyers.update({
+          where : {id},
+          data : buyersData
+        })
+
+        return NextResponse.json({
+          message:"Record updated successfully.",
+          success : true,
+        },{status : 200});
+     }
+     catch(error){
+       return NextResponse.json({
+         message : "Record updation falied.",
+         success : false
+       },{status : 404})
+     }
+}

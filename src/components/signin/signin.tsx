@@ -6,18 +6,36 @@ import { useState } from "react";
 import SignInModel from "@/models/signin";
 import { setLoginStateUI } from "@/redux/ownerSlice";
 import { useDispatch } from "react-redux";
+import { success } from "zod";
+import toast from "react-hot-toast";
 
 function SignIn() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignInModel>();
 
   const [passwordToggle, setPasswordToggle] = useState<boolean>(true);
   const dispatch = useDispatch();
-  function onSubmit(data: SignInModel) {
-    console.log(data);
+  async function onSubmit(data: SignInModel) {
+    let userData: any = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL + "api/users/login",
+      {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+          content: "application/json",
+        },
+      }
+    );
+    userData = await userData.json();
+    if (userData.success === true) {
+      toast.success(userData.message);
+      localStorage.setItem("token", userData.token);
+    } else {
+      toast.error("User Logged in Falied");
+    }
   }
 
   function toggleAuthUI() {
@@ -92,7 +110,15 @@ function SignIn() {
           </p>
         )}
       </div>
-      <button className="form-submit-button">
+      <button disabled={isSubmitting} className="form-submit-button">
+        {isSubmitting && (
+          <Image
+            src="/images/loader.webp"
+            alt="loader"
+            width={25}
+            height={25}
+          />
+        )}
         <span>Login</span>
       </button>
       <p>

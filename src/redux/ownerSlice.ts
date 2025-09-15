@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const ownerSlice = createSlice({
   name: "owner",
-  initialState: { isLoginUI: true },
+  initialState: {
+    isLoginUI: true,
+  },
   reducers: {
     setLoginStateUI: (state, action) => {
       state.isLoginUI = action.payload;
