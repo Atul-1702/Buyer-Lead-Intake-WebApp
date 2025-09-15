@@ -1,0 +1,124 @@
+.csv-import-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", sans-serif;
+
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+  .upload-section {
+    margin-bottom: 1.5rem;
+
+    .file-label {
+      display: inline-block;
+      background: #007bff;
+      color: #fff;
+      padding: 0.7rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.25s ease;
+
+      &:hover {
+        background: #0056b3;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+    }
+
+    .note {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  }
+
+  .action-buttons {
+    margin: 1.5rem 0;
+    display: flex;
+    gap: 1rem;
+
+    .btn {
+      padding: 0.7rem 1.4rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.25s ease;
+
+      &.btn-primary {
+        background: #007bff;
+        color: #fff;
+
+        &:hover {
+          background: #0056b3;
+        }
+      }
+
+      &.btn-success {
+        background: #28a745;
+        color: #fff;
+
+        &:disabled {
+          background: #94d3a2;
+          cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+          background: #1e7e34;
+        }
+      }
+    }
+  }
+
+  .error-section {
+    margin-top: 2rem;
+
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #c00;
+    }
+
+    .error-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        text-align: left;
+      }
+
+      th {
+        background: #f8f9fa;
+        font-weight: 600;
+      }
+
+      tbody tr:nth-child(even) {
+        background: #fdfdfd;
+      }
+
+      tbody tr td:first-child {
+        font-weight: bold;
+        color: #333;
+      }
+
+      tbody tr td:last-child {
+        color: #c00;
+      }
+    }
+  }
+}

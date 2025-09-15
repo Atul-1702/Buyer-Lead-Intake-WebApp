@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "public"."Buyers" ALTER COLUMN "tags" DROP NOT NULL,
+ALTER COLUMN "tags" SET DATA TYPE TEXT;

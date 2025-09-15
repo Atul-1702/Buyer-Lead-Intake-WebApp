@@ -4,15 +4,17 @@ import "./signup.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Image from "next/image";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoginStateUI } from "@/redux/ownerSlice";
+import toast from "react-hot-toast";
+import { LoginUI } from "@/models/redux";
 
 function Signup() {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignupModel>();
 
   const [passwordToggle, setPasswordToggle] = useState<boolean>(true);
@@ -20,8 +22,26 @@ function Signup() {
     true
   );
   const dispatch = useDispatch();
-  function onSubmit(data: SignupModel) {
-    console.log(data);
+
+  async function onSubmit(data: SignupModel) {
+    delete data["confirm-password"];
+    let userData: any = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL + "api/users/signup",
+      {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+          content: "application/json",
+        },
+      }
+    );
+    userData = await userData.json();
+    if (userData.success === true) {
+      toast.success(userData.message + ". Login");
+      dispatch(setLoginStateUI(true));
+    } else {
+      toast.error("User account creation Falied");
+    }
   }
 
   function toggleAuthUI() {
@@ -149,7 +169,15 @@ function Signup() {
             </p>
           )}
       </div>
-      <button className="form-submit-button">
+      <button disabled={isSubmitting} className="form-submit-button">
+        {isSubmitting && (
+          <Image
+            src="/images/loader.webp"
+            alt="loader"
+            width={25}
+            height={25}
+          />
+        )}{" "}
         <span>Submit</span>
       </button>
       <p>

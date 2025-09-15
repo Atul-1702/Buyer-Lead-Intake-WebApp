@@ -90,13 +90,13 @@ model Buyers {
    propertyType PropertyType
    bhk BHK?
    purpose Purpose
-   budgetMin Int?
-   budgetMax Int?
+   budgetMin String?
+   budgetMax String?
    timeline Timeline
    source Source
    status Status @default(NEW)
    notes String?
-   tags String[]
+   tags String?
    ownerId String
    owner User  @relation(fields:[ownerId],references:[id])
    updatedAt DateTime @updatedAt()

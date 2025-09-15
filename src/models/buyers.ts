@@ -1,10 +1,14 @@
 import { z } from "zod";
 
-const buyersModel = z
+const buyersSchema = z
   .object({
-    fullName: z.string().min(2).max(80),
-    email: z.email().optional(),
-    phone: z.string().min(10).max(15),
+    id: z.string().optional(),
+    fullName: z.string().min(2, "Please enter at least 2 characters"),
+    email: z.email("Please enter a Valid email.").optional().or(z.literal("")),
+    phone: z
+      .string()
+      .min(10, "Phone number should must contain 10–15 digits")
+      .max(15, "Phone number should must contain 10–15 digits"),
     city: z.enum(["CHANDIGARH", "MOHALI", "ZIRKAPUR", "PANCHKULA", "OTHER"]),
     propertyType: z.enum(["APARTMENT", "VILLA", "PLOT", "OFFICE", "RETAIL"]),
     bhk: z
@@ -26,7 +30,8 @@ const buyersModel = z
         "CONVERTED",
         "DROPPED",
       ])
-      .default("NEW"),
+      .default("NEW")
+      .optional(),
     notes: z.string().max(1000).optional(),
     tags: z.string().optional(),
     updatedAt: z.date().optional(),
@@ -41,6 +46,13 @@ const buyersModel = z
       message: "Maximum budget should be greater than or equal to minimum",
       path: ["budgetMax"],
     }
+  )
+  .refine(
+    (data) => !["APARTMENT", "VILLA"].includes(data.propertyType) || !!data.bhk,
+    {
+      message: "Please select BHK for Apartment or Villa",
+      path: ["bhk"],
+    }
   );
 
-export default buyersModel;
+export default buyersSchema;
