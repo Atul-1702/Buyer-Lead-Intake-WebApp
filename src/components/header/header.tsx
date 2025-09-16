@@ -26,6 +26,7 @@ function Header() {
     if (token) {
       Cookies.remove("token");
       setToken(undefined);
+      router.push("/");
     } else {
       setToken(Cookies.get("token"));
     }
