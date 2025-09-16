@@ -17,7 +17,7 @@ async function fetchBuyerData(id: string) {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = await params;
+  const { id } = params;
   const buyerDetails = await fetchBuyerData(id);
   return (
     <main>
