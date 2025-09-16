@@ -49,14 +49,13 @@ async function Page({ searchParams }) {
     queryParams.propertyType,
     queryParams.timeline
   );
-
+  console.log(filteredData);
   return (
     <>
       {filteredData && (
         <BuyersComponent
           filterData={filteredData.details}
           totalRecords={filteredData.totalRecords}
-          ownerId={filteredData.ownerId}
         ></BuyersComponent>
       )}
     </>

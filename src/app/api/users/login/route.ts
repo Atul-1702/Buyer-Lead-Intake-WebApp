@@ -29,15 +29,21 @@ export async function POST(req: NextRequest) {
       expiresIn: 24 * 1000 * 60,
     });
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         success: true,
         message: "User logged in successfully.",
         details: savedData,
-        token,
       },
       { status: 200 }
     );
+
+    response.cookies.set("token", token, {
+      httpOnly: false,
+      path: "/",
+      maxAge: 24 * 60 * 60,
+    });
+    return response;
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(

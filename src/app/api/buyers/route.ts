@@ -4,51 +4,38 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import UserModel from "./../models/user-model";
 import buyersModel from "../models/buyers.model";
 import buyerHistoryModel from "../models/buyer-history.model";
-import z, { success } from "zod";
+import z from "zod";
 
 export async function POST(req: NextRequest) {
   try {
-    const token = await req.headers.get("authorization")?.split(" ")[1];
-    if (token !== undefined) {
-      const dealerUser = jwt.verify(token, String(process.env.SECRET_KEY));
+    const ownerId = req.headers.get("x-owner-id");
 
-      if (!dealerUser) {
-        return NextResponse.json(
-          {
-            success: false,
-            message: "Session expired. Please login again.",
-          },
-          { status: 401 }
-        );
-      }
+    const buyersData = await req.json();
+    buyersData.ownerId = ownerId;
 
-      const buyersData = await req.json();
-      buyersData.ownerId = dealerUser?.id;
+    buyersModel.parse(buyersData);
 
-      buyersModel.parse(buyersData);
+    const buyerDB = await prisma.buyers.create({
+      data: buyersData,
+    });
 
-      const buyerDB = await prisma.buyers.create({
-        data: buyersData,
-      });
+    const history = {
+      buyerId: buyerDB.id,
+      changedBy: buyerDB.ownerId,
+      changedAt: buyerDB.updatedAt,
+      diff: { old: {}, new: { ...buyerDB } },
+    };
 
-      const history = {
-        buyerId: buyerDB.id,
-        changedBy: buyerDB.ownerId,
-        changedAt: buyerDB.updatedAt,
-        diff: { old: {}, new: { ...buyerDB } },
-      };
+    buyerHistoryModel.parse(history);
 
-      buyerHistoryModel.parse(history);
+    const buyer_history_db = await prisma.buyer_History.create({
+      data: history,
+    });
 
-      const buyer_history_db = await prisma.buyer_History.create({
-        data: history,
-      });
-
-      return NextResponse.json({
-        success: true,
-        message: "Buyer record created successfully.",
-      });
-    }
+    return NextResponse.json({
+      success: true,
+      message: "Buyer record created successfully.",
+    });
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -85,26 +72,29 @@ export async function POST(req: NextRequest) {
   }
 }
 
+export async function PUT(req: NextRequest) {
+  try {
+    const { id, buyersData } = await req.json();
 
-export async function PUT(req:NextRequest){
-   
-     try{
-        const {id,buyersData} = await req.json();
+    await prisma.buyers.update({
+      where: { id },
+      data: buyersData,
+    });
 
-        await prisma.buyers.update({
-          where : {id},
-          data : buyersData
-        })
-
-        return NextResponse.json({
-          message:"Record updated successfully.",
-          success : true,
-        },{status : 200});
-     }
-     catch(error){
-       return NextResponse.json({
-         message : "Record updation falied.",
-         success : false
-       },{status : 404})
-     }
+    return NextResponse.json(
+      {
+        message: "Record updated successfully.",
+        success: true,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "Record updation falied.",
+        success: false,
+      },
+      { status: 404 }
+    );
+  }
 }

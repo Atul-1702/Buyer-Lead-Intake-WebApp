@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 type BuyerForm = z.infer<typeof buyersSchema>;
 
-function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
+function LeadForm({ buyerDetails }: { buyerDetails?: BuyerForm }) {
   const {
     register,
     handleSubmit,
@@ -20,16 +20,9 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
     reset,
   } = useForm<BuyerForm>({
     resolver: zodResolver(buyersSchema),
-    defaultValues: {},
   });
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (buyerDetails) {
-      reset(buyerDetails); // populate form when buyerDetails arrives
-    }
-  }, [buyerDetails, reset]);
 
   async function onFormSubmitted(data: BuyerForm) {
     console.log("Form Submitted");
@@ -97,6 +90,7 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
           type="text"
           id="fullName"
           placeholder="fullname..."
+          defaultValue={buyerDetails?.fullName}
           {...register("fullName")}
         />
         {errors.fullName && <p className="error">{errors.fullName.message}</p>}
@@ -109,6 +103,7 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
             type="text"
             id="email"
             placeholder="email..."
+            defaultValue={buyerDetails?.email}
             {...register("email")}
           />
           {errors.email && <p className="error">{errors.email.message}</p>}
@@ -119,6 +114,7 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
             type="text"
             id="phone"
             placeholder="phone..."
+            defaultValue={buyerDetails?.phone}
             {...register("phone")}
           />
           {errors.phone && <p className="error">{errors.phone.message}</p>}
@@ -128,7 +124,11 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
       <div className="form-control-two-col">
         <div className="form-control-first-col">
           <label htmlFor="city">City*</label>
-          <select id="city" {...register("city")}>
+          <select
+            id="city"
+            {...register("city")}
+            defaultValue={buyerDetails?.city}
+          >
             <option value="CHANDIGARH">Chandigarh</option>
             <option value="MOHALI">Mohali</option>
             <option value="ZIRKAPUR">Zirakpur</option>
@@ -138,7 +138,11 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
         </div>
         <div className="form-control-second-col">
           <label htmlFor="property_type">Property Type*</label>
-          <select id="property_type" {...register("propertyType")}>
+          <select
+            id="property_type"
+            {...register("propertyType")}
+            defaultValue={buyerDetails?.propertyType}
+          >
             <option value="APARTMENT">Apartment</option>
             <option value="VILLA">Villa</option>
             <option value="PLOT">Plot</option>
@@ -171,7 +175,11 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
         </div>
         <div className="form-control-second-col">
           <label htmlFor="purpose">Purpose</label>
-          <select id="purpose" {...register("purpose")}>
+          <select
+            id="purpose"
+            {...register("purpose")}
+            defaultValue={buyerDetails?.purpose}
+          >
             <option value="BUY">Buy</option>
             <option value="RENT">Rent</option>
           </select>
@@ -186,6 +194,7 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
             id="budget_min"
             placeholder="budget min..."
             {...register("budgetMin")}
+            defaultValue={buyerDetails?.budgetMin}
           />
         </div>
         <div className="form-control-second-col">
@@ -195,6 +204,7 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
             id="budget_max"
             placeholder="budget max..."
             {...register("budgetMax")}
+            defaultValue={buyerDetails?.budgetMax}
           />
           {errors.budgetMax && (
             <p className="error">{errors.budgetMax.message}</p>
@@ -205,7 +215,11 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
       <div className="form-control-two-col">
         <div className="form-control-first-col">
           <label htmlFor="timeline">Timeline</label>
-          <select id="timeline" {...register("timeline")}>
+          <select
+            id="timeline"
+            {...register("timeline")}
+            defaultValue={buyerDetails?.timeline}
+          >
             <option value="M_0_3">0 - 3 Months</option>
             <option value="M_3_6">3 - 6 Months</option>
             <option value="GT6M">&gt; 6 Months</option>
@@ -214,7 +228,11 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
         </div>
         <div className="form-control-second-col">
           <label htmlFor="source">Source</label>
-          <select id="source" {...register("source")}>
+          <select
+            id="source"
+            {...register("source")}
+            defaultValue={buyerDetails?.source}
+          >
             <option value="WEBSITE">Website</option>
             <option value="REFERRAL">Referral</option>
             <option value="WALK_IN">Walk In</option>
@@ -226,7 +244,11 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
 
       <div className="form-control-single-col">
         <label htmlFor="notes">Notes</label>
-        <textarea id="notes" {...register("notes")}></textarea>
+        <textarea
+          id="notes"
+          {...register("notes")}
+          defaultValue={buyerDetails?.notes}
+        ></textarea>
       </div>
 
       <div className="form-control-single-col">
@@ -236,6 +258,7 @@ function LeadForm({ buyerDetails }: { buyerDetails: BuyerForm }) {
           id="tags"
           placeholder="add multiple tags sep by comma..."
           {...register("tags")}
+          defaultValue={buyerDetails?.tags}
         />
       </div>
 

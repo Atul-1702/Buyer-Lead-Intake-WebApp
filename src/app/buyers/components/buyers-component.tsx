@@ -2,8 +2,11 @@
 import { useEffect, useState } from "react";
 import "./buyers-component.scss";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
-function BuyersComponent({ filterData, totalRecords, ownerId }) {
+function BuyersComponent({ filterData, totalRecords }) {
   const [city, setCity] = useState("all");
   const [timeline, setTimeline] = useState("all");
   const [propertyType, setPropertyType] = useState("all");
@@ -11,11 +14,15 @@ function BuyersComponent({ filterData, totalRecords, ownerId }) {
   const [filteredData, setFilteredData] = useState([...filterData]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-
+  const [ownerId, setOwnerId] = useState<string | null>();
+  const [role, setRole] = useState<string | null>();
   useEffect(() => {
     router.push(
       `/buyers?city=${city}&timeline=${timeline}&propertyType=${propertyType}&page=${page}&limit=10`
     );
+
+    setOwnerId(localStorage.getItem("ownerId"));
+    setRole(localStorage.getItem("role"));
   }, [city, timeline, propertyType, page]);
   useEffect(() => {
     setFilteredData(filterData);
@@ -44,6 +51,46 @@ function BuyersComponent({ filterData, totalRecords, ownerId }) {
       setPage(1);
       setFilteredData(data);
     }, 500);
+  }
+  async function downloadCSV() {
+    toast.loading("Downloading CSV File...");
+    try {
+      const filterQuery = [];
+      if (city !== "all") {
+        filterQuery.push({ city });
+      }
+      if (propertyType !== "all") {
+        filterQuery.push({ propertyType });
+      }
+      if (timeline != "all") {
+        filterQuery.push({ timeline });
+      }
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BASE_URL + "api/buyers/csv-export",
+        {
+          method: "POST",
+          body: JSON.stringify(filterQuery),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to download CSV");
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "buyers_dataset.csv"; // file name
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+      toast.dismiss();
+    } catch (error) {
+      toast.dismiss();
+      toast.error("Downloading Failed...");
+    }
   }
   return (
     <div className="leads-page">
@@ -86,6 +133,10 @@ function BuyersComponent({ filterData, totalRecords, ownerId }) {
           placeholder="Search by name, phone, or email"
           onChange={debouncedSearch}
         />
+
+        <button className="download-btn" onClick={downloadCSV}>
+          Download CSV
+        </button>
       </div>
 
       <div className="table-wrapper">
@@ -124,7 +175,7 @@ function BuyersComponent({ filterData, totalRecords, ownerId }) {
                     })}
                   </td>
                   <td>
-                    {ownerId === buyer.ownerId && (
+                    {(role === "ADMIN" || ownerId === buyer.ownerId) && (
                       <button
                         className="btn-action"
                         onClick={() => router.push("/buyers/" + buyer.id)}

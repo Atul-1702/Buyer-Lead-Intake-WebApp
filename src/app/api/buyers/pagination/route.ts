@@ -10,13 +10,8 @@ export async function GET(req: NextRequest) {
   const timeline = searchParams.get("timeline");
   const propertyType = searchParams.get("propertyType");
 
-  const token = await req.headers.get("authorization")?.split(" ")[1];
-  let ownerId;
-  if (token) {
-    const dealerUser = jwt.verify(token, String(process.env.SECRET_KEY));
-    ownerId = dealerUser.id;
-  }
-
+  const ownerId = req.headers.get("x-owner-id");
+  console.log(ownerId);
   if (
     !(city || timeline || propertyType) ||
     (city === "all" && timeline === "all" && propertyType === "all")
