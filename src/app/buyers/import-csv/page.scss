@@ -122,3 +122,20 @@
     }
   }
 }
+
+.image-loader {
+  width: 100vw;
+  height: 99vh;
+  opacity: 0.5;
+  position: fixed;
+  z-index: 4;
+  background-color: lightgray;
+  top: 0;
+  left: 0;
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}

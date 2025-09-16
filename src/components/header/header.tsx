@@ -3,15 +3,31 @@ import Link from "next/link";
 import Image from "next/image";
 import "./header.scss";
 import { useState } from "react";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function Header() {
   const [toggleImage, setToggleImage] = useState<string>("/images/menu.svg");
-
+  const [token, setToken] = useState<string | undefined>(undefined);
+  const router = useRouter();
+  useEffect(() => {
+    setToken(Cookies.get("token"));
+    console.log(Cookies.get("token"));
+  });
   function onToggleImageButtonClicked() {
     if (toggleImage === "/images/menu.svg") {
       setToggleImage("/images/cancel-icon.svg");
     } else {
       setToggleImage("/images/menu.svg");
+    }
+  }
+  function toggleLoginLogout() {
+    if (token) {
+      Cookies.remove("token");
+      setToken(undefined);
+    } else {
+      setToken(Cookies.get("token"));
     }
   }
   return (
@@ -20,40 +36,30 @@ function Header() {
         <Link href="/" className="header-logo">
           <h1>BuyersLead</h1>
         </Link>
-
-        <ul className="header-nav-links">
-          <li>
-            <Link href={{ pathname: "/artists" }}>All Buyers</Link>
-          </li>
-          <li>
-            <Link
-              href={{ pathname: "/artists", query: { category: "Singer" } }}
-            >
-              Add Buyer
-            </Link>
-          </li>
-          <li>
-            <Link
-              href={{ pathname: "/artists", query: { category: "Dancer" } }}
-            >
-              CV Import
-            </Link>
-          </li>
-        </ul>
+        {token && (
+          <ul className="header-nav-links">
+            <li>
+              <Link href={{ pathname: "/buyers" }}>All Buyers</Link>
+            </li>
+            <li>
+              <Link href={{ pathname: "/buyers/new" }}>Add Buyer</Link>
+            </li>
+            <li>
+              <Link href={{ pathname: "/buyers/import-csv" }}>CSV Import</Link>
+            </li>
+          </ul>
+        )}
 
         <div className="header-nav-buttons">
           <Link href="/owner/auth" className="book-now-link">
-            <button type="button">
+            <button type="button" onClick={toggleLoginLogout}>
               <Image
-                src="/images/right-arrow-icon-white.svg"
+                src="/images/Login-button-icon-red-color.svg"
                 alt="Book Now"
                 width={24}
                 height={24}
               />
-
-              {/* <span>Logout</span> */}
-
-              <span>Login / Signup</span>
+              {token ? <span>Logout</span> : <span>Login / Signup</span>}
             </button>
           </Link>
           <button
@@ -70,18 +76,16 @@ function Header() {
           <div className="header-mobile-top-bar">
             <Link className="title" href={"/"}></Link>
             <div className="mobile-button-containers">
-              <Link href="/artist-book" className="mobile-book-now-link">
-                <button type="button">
+              <Link href="/owner/auth" className="mobile-book-now-link">
+                <button type="button" onClick={toggleLoginLogout}>
                   <Image
-                    src="/images/right-arrow-icon-white.svg"
+                    src="/images/Login-button-icon-red-color.svg"
                     alt="Book Now"
                     width={24}
                     height={24}
                   />
 
-                  {/* <span>Logout</span> */}
-
-                  <span>Login / Signup</span>
+                  {token ? <span>Logout</span> : <span>Login / Signup</span>}
                 </button>
               </Link>
               <button
@@ -98,44 +102,19 @@ function Header() {
             </div>
           </div>
           <hr />
-          <ul className="mobile-header-nav-links">
-            <li>
-              <Link href="/artists">All Artists</Link>
-            </li>
-            <li>
-              <Link
-                href={{ pathname: "/artists", query: { category: "Singer" } }}
-              >
-                Singer
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={{ pathname: "/artists", query: { category: "Dancer" } }}
-              >
-                Dancer
-              </Link>
-            </li>
-            <li>
-              <Link href={{ pathname: "/artists", query: { category: "DJ" } }}>
-                DJ
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={{ pathname: "/artists", query: { category: "Comedian" } }}
-              >
-                Comedian
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={{ pathname: "/artists", query: { category: "Musician" } }}
-              >
-                Musician
-              </Link>
-            </li>
-          </ul>
+          {token && (
+            <ul className="mobile-header-nav-links">
+              <li>
+                <Link href="/buyers">All Buyers</Link>
+              </li>
+              <li>
+                <Link href={{ pathname: "/buyers/new" }}>Add Buyer</Link>
+              </li>
+              <li>
+                <Link href={{ pathname: "/buyers/cv-import" }}>CSV Import</Link>
+              </li>
+            </ul>
+          )}
         </nav>
       ) : null}
     </header>

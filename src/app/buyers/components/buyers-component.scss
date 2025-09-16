@@ -23,6 +23,35 @@
     input {
       flex: 2 1 280px;
     }
+    .download-btn {
+      background-color: #4caf50; /* green */
+      color: white;
+      padding: 6px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .download-btn:hover {
+      background-color: #45a049; /* darker green */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .download-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .download-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
   }
 
   .table-wrapper {

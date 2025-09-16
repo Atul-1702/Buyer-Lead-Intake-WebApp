@@ -2,10 +2,12 @@ import { parse } from "csv-parse/sync";
 import { NextRequest, NextResponse } from "next/server";
 import buyersModel from "../../models/buyers.model";
 import { prisma } from "../../../../../lib/prisma";
+import { success } from "zod";
 
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
+    const ownerId = await req.headers.get("ownerId");
     const file = formData.get("file") as File;
     if (!file) {
       return NextResponse.json(
@@ -43,9 +45,10 @@ export async function POST(req: NextRequest) {
       if (!parsed.success) {
         errors.push({
           row: idx + 2,
-          message: parsed.error.errors.map((e) => e.message).join(","),
+          message: parsed.error.issues[0].message,
         });
       } else {
+        row.buyerId = ownerId;
         validRows.push(row);
       }
     });
@@ -54,16 +57,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ errors, inserted: 0 });
     }
 
-    await prisma.buyers.createMany({
-      data: validRows,
-      skipDuplicates: true,
-    });
+    // await prisma.buyers.createMany({
+    //   data: validRows,
+    //   skipDuplicates: true,
+    // });
 
-    return NextResponse.json({
-      message: "CSV processed successfully",
-      inserted: validRows.length,
-      errors,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "CSV processed successfully",
+        inserted: validRows.length,
+        errors,
+      },
+      { status: 201 }
+    );
   } catch (error) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }

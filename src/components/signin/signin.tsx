@@ -8,6 +8,7 @@ import { setLoginStateUI } from "@/redux/ownerSlice";
 import { useDispatch } from "react-redux";
 import { success } from "zod";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 function SignIn() {
   const {
@@ -18,6 +19,7 @@ function SignIn() {
 
   const [passwordToggle, setPasswordToggle] = useState<boolean>(true);
   const dispatch = useDispatch();
+  const router = useRouter();
   async function onSubmit(data: SignInModel) {
     let userData: any = await fetch(
       process.env.NEXT_PUBLIC_BASE_URL + "api/users/login",
@@ -31,8 +33,11 @@ function SignIn() {
     );
     userData = await userData.json();
     if (userData.success === true) {
+      router.push("/");
       toast.success(userData.message);
-      localStorage.setItem("token", userData.token);
+      localStorage.setItem("ownerId", userData.details.id);
+      localStorage.setItem("role", userData.details.role);
+      router.refresh();
     } else {
       toast.error("User Logged in Falied");
     }
@@ -110,7 +115,7 @@ function SignIn() {
           </p>
         )}
       </div>
-      <button disabled={isSubmitting} className="form-submit-button">
+      <button className="form-submit-button" disabled={isSubmitting}>
         {isSubmitting && (
           <Image
             src="/images/loader.webp"
