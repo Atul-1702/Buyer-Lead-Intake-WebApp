@@ -99,7 +99,7 @@ function BuyersComponent({ filterData, totalRecords }) {
           <option value="all">All Cities</option>
           <option value="CHANDIGARH">Chandigarh</option>
           <option value="MOHALI">Mohali</option>
-          <option value="ZIRAKPUR">Zirakpur</option>
+          <option value="ZIRKAPUR">Zirakpur</option>
           <option value="PANCHKULA">Panchkula</option>
           <option value="OTHER">Other</option>
         </select>
