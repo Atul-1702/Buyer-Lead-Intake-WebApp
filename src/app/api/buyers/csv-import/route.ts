@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
           message: parsed.error.issues[0].message,
         });
       } else {
-        row.buyerId = ownerId;
+        row.ownerId = "e215f345-b5da-4d07-9b29-b54c01ca9371";
         validRows.push(row);
       }
     });
@@ -57,10 +57,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ errors, inserted: 0 });
     }
 
-    // await prisma.buyers.createMany({
-    //   data: validRows,
-    //   skipDuplicates: true,
-    // });
+    await prisma.buyers.createMany({
+      data: validRows,
+    });
 
     return NextResponse.json(
       {

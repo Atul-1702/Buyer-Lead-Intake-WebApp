@@ -71,6 +71,7 @@ function LeadForm({ buyerDetails }: { buyerDetails?: BuyerForm }) {
 
       if (buyerData.success === true) {
         toast.success(buyerData.message);
+        router.push("/buyers");
       } else {
         toast.error("Buyer is not added successfully");
       }
