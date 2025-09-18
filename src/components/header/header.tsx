@@ -5,15 +5,16 @@ import "./header.scss";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 
 function Header() {
   const [toggleImage, setToggleImage] = useState<string>("/images/menu.svg");
   const [token, setToken] = useState<string | undefined>(undefined);
   const router = useRouter();
+  const segement = useSelectedLayoutSegments();
+  console.log(segement);
   useEffect(() => {
     setToken(Cookies.get("token"));
-    console.log(Cookies.get("token"));
   });
   function onToggleImageButtonClicked() {
     if (toggleImage === "/images/menu.svg") {
@@ -40,13 +41,40 @@ function Header() {
         {token && (
           <ul className="header-nav-links">
             <li>
-              <Link href={{ pathname: "/buyers" }}>All Buyers</Link>
+              <Link
+                className={
+                  segement[segement.length - 1] === "buyers"
+                    ? "link-active-class"
+                    : ""
+                }
+                href={{ pathname: "/buyers" }}
+              >
+                All Buyers
+              </Link>
             </li>
             <li>
-              <Link href={{ pathname: "/buyers/new" }}>Add Buyer</Link>
+              <Link
+                className={
+                  segement[segement.length - 1] === "new"
+                    ? "link-active-class"
+                    : ""
+                }
+                href={{ pathname: "/buyers/new" }}
+              >
+                Add Buyer
+              </Link>
             </li>
             <li>
-              <Link href={{ pathname: "/buyers/import-csv" }}>CSV Import</Link>
+              <Link
+                className={
+                  segement[segement.length - 1] === "import-csv"
+                    ? "link-active-class"
+                    : ""
+                }
+                href={{ pathname: "/buyers/import-csv" }}
+              >
+                CSV Import
+              </Link>
             </li>
           </ul>
         )}

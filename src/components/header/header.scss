@@ -170,3 +170,12 @@
     }
   }
 }
+
+.link-active-class {
+  font-weight: 700;
+  text-decoration: underline !important;
+  text-decoration-color: white;
+  color: white !important;
+  text-decoration-thickness: 2px !important;
+  text-decoration-skip-ink: none;
+}
